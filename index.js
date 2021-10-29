@@ -23,7 +23,7 @@ async function run() {
     const hotelDetails = database.collection("hotelDetails");
 
     // GET API
-    app.get("/AddHotel", async (req, res) => {
+    app.get("/addHotel", async (req, res) => {
       const cursor = hotelDetails.find({});
       const hotel = await cursor.toArray();
       res.send(hotel);
