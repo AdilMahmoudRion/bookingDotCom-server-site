@@ -30,7 +30,7 @@ async function run() {
       res.send(hotel);
     });
 
-    // GET Single Service
+    // GET Single Hotel details
     app.get("/addHotel/:id", async (req, res) => {
       const id = req.params.id;
 
