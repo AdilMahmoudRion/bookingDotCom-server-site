@@ -1,5 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+const ObjectId = require("mongodb").ObjectId;
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
@@ -27,11 +28,19 @@ async function run() {
       const cursor = hotelDetails.find({});
       const hotel = await cursor.toArray();
       res.send(hotel);
-    })
-    // inserted data in database
+    });
+
+    // GET Single Service
+    app.get("/addHotel/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const query = { _id: ObjectId(id) };
+      const service = await hotelDetails.findOne(query);
+      res.json(service);
+    });
 
     // POST API
-    app.post("/AddHotel", async (req, res) => {
+    app.post("/addHotel", async (req, res) => {
       const addHotel = req.body;
       const result = await hotelDetails.insertOne(addHotel);
       res.json(result);
