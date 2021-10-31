@@ -33,11 +33,29 @@ async function run() {
     // GET Single Hotel details
     app.get("/addHotel/:id", async (req, res) => {
       const id = req.params.id;
-
       const query = { _id: ObjectId(id) };
       const service = await hotelDetails.findOne(query);
       res.json(service);
     });
+    app.put("/addHotel/:id", async (req, res) => {
+      const id = req.params.id;
+      const update = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true }
+      const updateDoc = {
+        $set: {
+          HotelName: update.HotelName,
+          rating: update.rating,
+          rate: update.rate,
+          img: update.img,
+          address: update.address,
+          Details: update.Details,
+        },
+      };
+      const result = await hotelDetails.updateOne(filter, updateDoc, options);
+      res.json(result);
+    });
+    
 
     // POST API
     app.post("/addHotel", async (req, res) => {
@@ -45,6 +63,7 @@ async function run() {
       const result = await hotelDetails.insertOne(addHotel);
       res.json(result);
     });
+    //
 
     // DELETE API
     app.delete("/addHotel/:id", async (req, res) => {
