@@ -45,6 +45,14 @@ async function run() {
       const result = await hotelDetails.insertOne(addHotel);
       res.json(result);
     });
+
+    // DELETE API
+    app.delete("/addHotel/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await hotelDetails.deleteOne(query);
+      res.json(result);
+    });
   } finally {
     // await client.close();
   }
